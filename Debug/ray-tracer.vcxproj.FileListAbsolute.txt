@@ -1,2 +1,0 @@
-C:\Users\cocot\dev\ray-tracer\Debug\ray-tracer.exe
-C:\Users\cocot\dev\ray-tracer\Debug\ray-tracer.pdb
