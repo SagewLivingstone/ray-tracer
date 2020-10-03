@@ -144,6 +144,7 @@
   <ItemGroup>
     <ClInclude Include="hittable.h" />
     <ClInclude Include="sphere.h" />
+    <ClInclude Include="src\include\camera.h" />
     <ClInclude Include="src\include\color.h" />
     <ClInclude Include="src\include\common.h" />
     <ClInclude Include="src\include\hittable.h" />

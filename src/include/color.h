@@ -6,11 +6,20 @@
 
 #include <iostream>
 
-void write_color(std::ostream& out, color pixel_value)
+void write_color(std::ostream& out, color pixel_value, int samples_per_pixel)
 {
-    out << static_cast<int>(255.999 * pixel_value.x()) << ' '
-        << static_cast<int>(255.999 * pixel_value.y()) << ' '
-        << static_cast<int>(255.999 * pixel_value.z()) << '\n';
+    auto r = pixel_value.x();
+    auto g = pixel_value.y();
+    auto b = pixel_value.z();
+
+    auto scale = 1.0 / samples_per_pixel;
+    r *= scale;
+    g *= scale;
+    b *= scale;
+
+    out << static_cast<int>(256 * clamp(r, 0.0, 0.999)) << ' '
+        << static_cast<int>(256 * clamp(g, 0.0, 0.999)) << ' '
+        << static_cast<int>(256 * clamp(b, 0.0, 0.999)) << '\n';
 }
 
 #endif // !COLOR_H
