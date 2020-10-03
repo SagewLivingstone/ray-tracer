@@ -32,5 +32,8 @@
     <ClInclude Include="src\include\vec3.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="hittable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
