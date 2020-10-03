@@ -51,6 +51,14 @@ public:
         return sqrt(length_squared());
     }
 
+    inline static vec3 random() {
+        return vec3(random_double(), random_double(), random_double());
+    }
+
+    inline static vec3 random(double min, double max) {
+        return vec3(random_double(min, max), random_double(min, max), random_double(min, max));
+    }
+
 public:
     double e[3];
 };
@@ -114,6 +122,14 @@ inline vec3 unit_vector(vec3 v)
 inline vec3 interp3(const vec3& a, const vec3& b, double x)
 {
     return (1 - x) * a + x * b;
+}
+
+vec3 random_in_unit_sphere() {
+    while (true) {
+        auto p = vec3::random(-1, 1);
+        if (p.length_squared() >= 1) continue;
+        return p;
+    }
 }
 
 #endif

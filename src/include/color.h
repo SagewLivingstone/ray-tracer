@@ -12,6 +12,7 @@ void write_color(std::ostream& out, color pixel_value, int samples_per_pixel)
     auto g = pixel_value.y();
     auto b = pixel_value.z();
 
+    // TODO: Why the heck are we doing the division here? Shouldn't this be in the mainloop?
     auto scale = 1.0 / samples_per_pixel;
     r *= scale;
     g *= scale;
