@@ -143,8 +143,11 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="hittable.h" />
+    <ClInclude Include="sphere.h" />
     <ClInclude Include="src\include\color.h" />
+    <ClInclude Include="src\include\hittable.h" />
     <ClInclude Include="src\include\ray.h" />
+    <ClInclude Include="src\include\sphere.h" />
     <ClInclude Include="src\include\vec3.h" />
     <ClInclude Include="src\lib\stb_image_write.h" />
   </ItemGroup>

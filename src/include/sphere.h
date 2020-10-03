@@ -35,7 +35,8 @@ bool Sphere::hit(const ray& r, double tmin, double tmax, hit_record& rec) const 
         if (tmp < tmax && tmp > tmin) {
             rec.t = tmp;
             rec.p = r.at(tmp);
-            rec.normal = (rec.p - center) / radius;
+            vec3 outward_normal = (rec.p - center) / radius;
+            rec.set_face_normal(r, outward_normal);
             return true;
         }
 
@@ -44,7 +45,8 @@ bool Sphere::hit(const ray& r, double tmin, double tmax, hit_record& rec) const 
         if (tmp < tmax && tmp > tmin) {
             rec.t = tmp;
             rec.p = r.at(tmp);
-            rec.normal = (rec.p - center) / radius;
+            vec3 outward_normal = (rec.p - center) / radius;
+            rec.set_face_normal(r, outward_normal);
             return true;
         }
 
