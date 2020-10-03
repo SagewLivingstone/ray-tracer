@@ -44,5 +44,11 @@
     <ClInclude Include="src\include\sphere.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\include\hittable_list.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\include\common.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

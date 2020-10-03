@@ -41,7 +41,7 @@ bool Sphere::hit(const ray& r, double tmin, double tmax, hit_record& rec) const 
         }
 
         // Check the positive root
-        auto tmp = (-half_b + root) / a;
+        tmp = (-half_b + root) / a;
         if (tmp < tmax && tmp > tmin) {
             rec.t = tmp;
             rec.p = r.at(tmp);

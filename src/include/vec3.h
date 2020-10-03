@@ -111,7 +111,7 @@ inline vec3 unit_vector(vec3 v)
     return v / v.length();
 }
 
-inline vec3 interp3(vec3& a, vec3& b, double x)
+inline vec3 interp3(const vec3& a, const vec3& b, double x)
 {
     return (1 - x) * a + x * b;
 }

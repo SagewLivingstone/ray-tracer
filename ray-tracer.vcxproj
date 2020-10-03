@@ -145,7 +145,9 @@
     <ClInclude Include="hittable.h" />
     <ClInclude Include="sphere.h" />
     <ClInclude Include="src\include\color.h" />
+    <ClInclude Include="src\include\common.h" />
     <ClInclude Include="src\include\hittable.h" />
+    <ClInclude Include="src\include\hittable_list.h" />
     <ClInclude Include="src\include\ray.h" />
     <ClInclude Include="src\include\sphere.h" />
     <ClInclude Include="src\include\vec3.h" />
