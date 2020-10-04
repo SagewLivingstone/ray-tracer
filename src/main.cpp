@@ -4,6 +4,7 @@
 #include "include/hittable_list.h"
 #include "include/sphere.h"
 #include "include/camera.h"
+#include "include/material.h"
 
 #include <iostream>
 
@@ -15,9 +16,14 @@ color ray_color(const ray& r, const hittable& world, int depth)
 
     hit_record rec;
     if (world.hit(r, 0.001, infinity, rec)) {
-        point3 target = rec.p + rec.normal + random_in_unit_sphere();
-        return 0.5 * ray_color(ray(rec.p, target - rec.p), world, depth-1);
+        ray scattered;
+        color attenuation;
+        if (rec.mat_ptr->scatter(r, rec, attenuation, scattered)) {
+            return attenuation * ray_color(scattered, world, depth - 1);
+        }
+        return color(0, 0, 0);
     }
+
     vec3 unit_direction = unit_vector(r.direction());
     auto t = 0.5 * (unit_direction.y() + 1.0);  // Interp traverse on the y axis
     return interp3(white, sky_blue, t);
@@ -35,8 +41,16 @@ int main()
 
     // World
     hittable_list world;
-    world.add(make_shared<Sphere>(point3(0, 0, -1), 0.5));
-    world.add(make_shared<Sphere>(point3(0, -100.5, -1), 100));
+
+    auto material_ground   = make_shared<lambertian>(color(0.8, 0.8, 0.0));
+    auto material_diff     = make_shared<lambertian>(color(0.7, 0.3, 0.3));
+    auto material_metal    = make_shared<metal>(color(0.8, 0.8, 0.8));
+    auto material_bronze   = make_shared<metal>(color(0.8, 0.6, 0.2));
+
+    world.add(make_shared<Sphere>(point3(0, -100.5, -1), 100.0, material_ground));
+    world.add(make_shared<Sphere>(point3(0.0, 0.0, -1.0), 0.5, material_diff));
+    world.add(make_shared<Sphere>(point3(-1.0, 0.0, -1.0), 0.5, material_bronze));
+    world.add(make_shared<Sphere>(point3(1.0, 0.0, -1.0), 0.5, material_metal));
 
     // Camera
     camera cam;
