@@ -42,15 +42,17 @@ int main()
     // World
     hittable_list world;
 
-    auto material_ground   = make_shared<lambertian>(color(0.8, 0.8, 0.0));
-    auto material_diff     = make_shared<lambertian>(color(0.7, 0.3, 0.3));
+    auto material_ground   = make_shared<lambertian>(color(0.1, 0.8, 0.2));
+    auto material_diff     = make_shared<lambertian>(color(0.9, 0.1, 0.7));
     auto material_metal    = make_shared<metal>(color(0.8, 0.8, 0.8), 0.2);
     auto material_bronze   = make_shared<metal>(color(0.8, 0.6, 0.2), 0.5);
+    auto material_glass    = make_shared<dielectric>(1.5);
 
     world.add(make_shared<Sphere>(point3(0, -100.5, -1), 100.0, material_ground));
     world.add(make_shared<Sphere>(point3(0.0, 0.0, -1.0), 0.5, material_diff));
-    world.add(make_shared<Sphere>(point3(-1.0, 0.0, -1.5), 0.5, material_bronze));
-    world.add(make_shared<Sphere>(point3(1.0, 0.0, -1.5), 0.5, material_metal));
+    world.add(make_shared<Sphere>(point3(-1.0, 0.0, -1.0), 0.5, material_bronze));
+    world.add(make_shared<Sphere>(point3(1.0, 0.0, -1.0), 0.5, material_glass));
+    world.add(make_shared<Sphere>(point3(0.0, 1.0, -1.0), 0.5, material_metal));
 
     // Camera
     camera cam;
