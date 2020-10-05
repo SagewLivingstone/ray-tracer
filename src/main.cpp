@@ -56,7 +56,7 @@ int main()
     world.add(make_shared<Sphere>(point3(0.0, 1.0, -1.0), 0.5, material_metal));
 
     // Camera
-    camera cam;
+    camera cam(60, aspect_ratio);
 
     // Render
 
