@@ -52,6 +52,7 @@ int main()
     world.add(make_shared<Sphere>(point3(0.0, 0.0, -1.0), 0.5, material_diff));
     world.add(make_shared<Sphere>(point3(-1.0, 0.0, -1.0), 0.5, material_bronze));
     world.add(make_shared<Sphere>(point3(1.0, 0.0, -1.0), 0.5, material_glass));
+    world.add(make_shared<Sphere>(point3(1.0, 0.0, -1.0), -0.45, material_glass));
     world.add(make_shared<Sphere>(point3(0.0, 1.0, -1.0), 0.5, material_metal));
 
     // Camera
