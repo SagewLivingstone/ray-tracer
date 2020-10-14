@@ -54,7 +54,7 @@ private:
     vec3 vertical;
     vec3 u, v, w;
     double lens_radius;
-    double time0;
+    double time0;  // Shutter open/close times
     double time1;
 };
 
