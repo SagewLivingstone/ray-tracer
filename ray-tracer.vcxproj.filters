@@ -53,5 +53,8 @@
     <ClInclude Include="src\include\material.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\include\moving_sphere.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
