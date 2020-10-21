@@ -14,17 +14,15 @@ public:
 
     bool hit(const ray& r, double tmin, double tmax) const {
         for (int a = 0; a < 3; a++) {
-            auto t0 = fmin(
-                (_min[a] - r.origin()[a]) / r.direction()[a],
-                (_max[a] - r.origin()[a]) / r.direction()[a]
-            );
-            auto t1 = fmax(
-                (_min[a] - r.origin()[a]) / r.direction()[a],
-                (_max[a] - r.origin()[a]) / r.direction()[a]
-            );
+            auto invB = 1.0f / r.direction()[a];
+            auto t0 = (min()[a] - r.origin()[a]) * invB;
+            auto t1 = (max()[a] - r.origin()[a]) * invB;
+            
+            if (invB < 0.0f)
+                std::swap(t0, t1);
 
-            tmin = fmax(t0, tmin);
-            tmax = fmin(t1, tmax);
+            tmin = t0 > tmin ? t0 : tmin;
+            tmax = t1 < tmax ? t1 : tmax;
             if (tmax <= tmin)
                 return false;
         }
