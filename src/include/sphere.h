@@ -12,6 +12,8 @@ public:
 
     virtual bool hit(
         const ray& r, double tmin, double tmax, hit_record& rec) const override;
+    virtual bool bounding_box(
+        double t0, double t1, aabb& output_box) const override;
 
 public:
     point3 center;
@@ -57,6 +59,14 @@ bool Sphere::hit(const ray& r, double tmin, double tmax, hit_record& rec) const 
     }
 
     return false;
+}
+
+bool Sphere::bounding_box(double t0, double t1, aabb& output_box) const {
+    output_box = aabb(
+        center - vec3(radius, radius, radius),
+        center + vec3(radius, radius, radius)
+    );
+    return true;
 }
 
 #endif

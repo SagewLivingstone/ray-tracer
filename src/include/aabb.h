@@ -34,4 +34,18 @@ public:
     point3 _max;
 };
 
+aabb surrounding_box(aabb box0, aabb box1) {
+    point3 small(
+        fmin(box0.min().x(), box1.min().x()),
+        fmin(box0.min().y(), box1.min().y()),
+        fmin(box0.min().z(), box1.min().z())
+    );
+    point3 big(
+        fmax(box0.min().x(), box1.min().x()),
+        fmax(box0.min().y(), box1.min().y()),
+        fmax(box0.min().z(), box1.min().z())
+    );
+    return aabb(small, big);
+}
+
 #endif

@@ -143,6 +143,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="sphere.h" />
+    <ClInclude Include="src\include\aabb.h" />
     <ClInclude Include="src\include\camera.h" />
     <ClInclude Include="src\include\color.h" />
     <ClInclude Include="src\include\common.h" />
