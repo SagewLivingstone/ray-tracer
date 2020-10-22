@@ -59,5 +59,8 @@
     <ClInclude Include="src\include\aabb.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\include\bvh.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
