@@ -6,17 +6,18 @@
 #include "include/moving_sphere.h"
 #include "include/camera.h"
 #include "include/material.h"
+#include "include/bvh.h"
 
 #include <iostream>
 
-hittable_list demo_scene() {
+hittable_list demo_scene(int gridsize = 11) {
     hittable_list world;
 
     auto ground_material = make_shared<lambertian>(color(0.5, 0.5, 0.5));
     world.add(make_shared<Sphere>(point3(0, -1000, 0), 1000, ground_material));
 
-    for (int a = -11; a < 11; a++) {
-        for (int b = -11; b < 11; b++) {
+    for (int a = -gridsize; a < gridsize; a++) {
+        for (int b = -gridsize; b < gridsize; b++) {
             auto choose_mat = random_double();
             point3 center(a + 0.9 * random_double(), 0.2, b + 0.9 * random_double());
             auto center2 = center + vec3(0, random_double(0, 0.5), 0);
@@ -90,23 +91,25 @@ int main()
     const int max_depth = 50;  // Maxiumum reflection depth
 
     // World
-    auto world = demo_scene();
-    //hittable_list world;
+    //bvh_node world(demo_scene(4), 0, 1.0);
+    hittable_list world;
 
-    //auto material_ground   = make_shared<lambertian>(color(0.1, 0.8, 0.2));
-    //auto material_diff     = make_shared<lambertian>(color(0.9, 0.1, 0.7));
-    //auto material_metal    = make_shared<metal>(color(0.8, 0.8, 0.8), 0.2);
-    //auto material_bronze   = make_shared<metal>(color(0.8, 0.6, 0.2), 0.5);
-    //auto material_glass    = make_shared<dielectric>(1.5);
+    auto material_ground   = make_shared<lambertian>(color(0.1, 0.8, 0.2));
+    auto material_diff     = make_shared<lambertian>(color(0.9, 0.1, 0.7));
+    auto material_metal    = make_shared<metal>(color(0.8, 0.8, 0.8), 0.2);
+    auto material_bronze   = make_shared<metal>(color(0.8, 0.6, 0.2), 0.5);
+    auto material_glass    = make_shared<dielectric>(1.5);
 
-    //world.add(make_shared<Sphere>(point3(0, -100.5, -1), 100.0, material_ground));
-    //world.add(make_shared<Sphere>(point3(0.0, 0.0, -1.0), 0.5, material_diff));
-    //world.add(make_shared<Sphere>(point3(1.0, 0.0, -1.0), 0.5, material_bronze));
+    world.add(make_shared<Sphere>(point3(0, -100.5, -1), 100.0, material_ground));
+    world.add(make_shared<Sphere>(point3(0.0, 0.0, -1.0), 0.5, material_diff));
+    world.add(make_shared<Sphere>(point3(1.0, 0.0, -1.0), 0.5, material_bronze));
 
-    //world.add(make_shared<Sphere>(point3(-1.0, 0.0, -1.0), 0.5, material_glass));
-    //world.add(make_shared<Sphere>(point3(-1.0, 0.0, -1.0), -0.45, material_glass));
+    world.add(make_shared<Sphere>(point3(-1.0, 0.0, -1.0), 0.5, material_glass));
+    world.add(make_shared<Sphere>(point3(-1.0, 0.0, -1.0), -0.45, material_glass));
 
-    //world.add(make_shared<Sphere>(point3(0.0, 1.0, -1.5), 0.5, material_metal));
+    world.add(make_shared<Sphere>(point3(0.0, 1.0, -1.5), 0.5, material_metal));
+
+    bvh_node bvh_world(world, 0, 1.0);
 
     // Camera
     point3 lookfrom(13, 2, 3);
@@ -129,7 +132,7 @@ int main()
                 auto u = (i + random_double()) / (image_width - 1);
                 auto v = (j + random_double()) / (image_height - 1);
                 ray r = cam.get_ray(u, v);
-                pixel_color += ray_color(r, world, max_depth);
+                pixel_color += ray_color(r, bvh_world, max_depth);
             }
             write_color(std::cout, pixel_color, samples_per_pixel);
         }
