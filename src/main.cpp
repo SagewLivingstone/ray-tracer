@@ -85,13 +85,13 @@ int main()
 
     // Image
     const auto aspect_ratio = 3.0 / 2.0;
-    const int image_width = 720;
+    const int image_width = 1280;
     const int image_height = static_cast<int>(image_width / aspect_ratio);
     const int samples_per_pixel = 100;
     const int max_depth = 50;  // Maxiumum reflection depth
 
     // World
-    bvh_node world(demo_scene(8), 0, 1.0);
+    bvh_node world(demo_scene(9), 0, 1.0);
     //hittable_list world;
 
     //auto material_ground   = make_shared<lambertian>(color(0.1, 0.8, 0.2));
