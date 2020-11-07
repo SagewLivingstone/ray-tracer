@@ -13,5 +13,5 @@ _Demo sphere scene showing high-reflective and dielectric glass spheres, depth o
 
 ## current todos:
 * multithread aa rays
-* add library to output to png
+* ~add library to output to png~
 * tri and rect primitives
