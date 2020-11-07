@@ -154,6 +154,7 @@
     <ClInclude Include="src\include\moving_sphere.h" />
     <ClInclude Include="src\include\ray.h" />
     <ClInclude Include="src\include\sphere.h" />
+    <ClInclude Include="src\include\texture.h" />
     <ClInclude Include="src\include\vec3.h" />
     <ClInclude Include="src\lib\stb_image_write.h" />
   </ItemGroup>

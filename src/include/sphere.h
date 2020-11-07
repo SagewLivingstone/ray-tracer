@@ -5,6 +5,8 @@
 #include "hittable.h"
 #include "vec3.h"
 
+#include <cmath>
+
 class Sphere : public hittable {
 public:
     Sphere() {}
@@ -14,6 +16,15 @@ public:
         const ray& r, double tmin, double tmax, hit_record& rec) const override;
     virtual bool bounding_box(
         double t0, double t1, aabb& output_box) const override;
+
+private:
+    static void get_sphere_uv(const point3& p, double& u, double& v) {
+        auto theta = acos(-p.y());
+        auto phi = atan2(-p.z(), p.x()) + pi;
+
+        u = phi / (2 * phi);
+        v = theta / pi;
+    }
 
 public:
     point3 center;
@@ -40,6 +51,7 @@ bool Sphere::hit(const ray& r, double tmin, double tmax, hit_record& rec) const 
             rec.p = r.at(tmp);
             vec3 outward_normal = (rec.p - center) / radius;
             rec.set_face_normal(r, outward_normal);
+            get_sphere_uv(outward_normal, rec.u, rec.v);
             rec.mat_ptr = mat_ptr;
             return true;
         }
@@ -51,6 +63,7 @@ bool Sphere::hit(const ray& r, double tmin, double tmax, hit_record& rec) const 
             rec.p = r.at(tmp);
             vec3 outward_normal = (rec.p - center) / radius;
             rec.set_face_normal(r, outward_normal);
+            get_sphere_uv(outward_normal, rec.u, rec.v);
             rec.mat_ptr = mat_ptr;
             return true;
         }

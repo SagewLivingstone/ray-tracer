@@ -6,6 +6,7 @@
 
 #include <iostream>
 
+// OLD .ppm output function
 void write_color(std::ostream& out, color pixel_value, int samples_per_pixel)
 {
     auto r = pixel_value.x();

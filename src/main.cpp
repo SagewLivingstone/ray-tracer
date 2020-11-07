@@ -105,8 +105,10 @@ int main()
     auto material_metal    = make_shared<metal>(color(0.8, 0.8, 0.8), 0.2);
     auto material_bronze   = make_shared<metal>(color(0.8, 0.6, 0.2), 0.5);
     auto material_glass    = make_shared<dielectric>(1.5);
+    auto texture_checker   = make_shared<checker_texture>(color(0.8, 0.0, 0.8), color(1, 1, 1));
+    auto material_checker  = make_shared<lambertian>(texture_checker);
 
-    world.add(make_shared<Sphere>(point3(0, -100.5, -1), 100.0, material_ground));
+    world.add(make_shared<Sphere>(point3(0, -1000.5, -1), 1000.0, material_checker));
     world.add(make_shared<Sphere>(point3(0.0, 0.0, -1.0), 0.5, material_diff));
     world.add(make_shared<Sphere>(point3(1.0, 0.0, -1.0), 0.5, material_bronze));
 
@@ -126,8 +128,6 @@ int main()
 
     // Render
 
-    std::cout << "P3\n" << image_width << ' ' << image_height << "\n255\n";
-
     for (int j = (image_height - 1); j >= 0; --j)
     {
         std::cerr << "\rScanlines remaining: " << j << ' ' << std::flush;
@@ -141,7 +141,6 @@ int main()
                 pixel_color += ray_color(r, world, max_depth);
             }
             write_data_color(image_data, &image_index, pixel_color, samples_per_pixel);
-            //write_color(std::cout, pixel_color, samples_per_pixel);
         }
     }
 
