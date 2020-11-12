@@ -15,4 +15,8 @@ _Demo sphere scene showing high-reflective and dielectric glass spheres, depth o
 * multithread aa rays
 * ~add library to output to png~
 * ~textures and uv mapping~
+* ~textures~
+* bitmap image textures
+* emissive lighting
+* diffuse volumes
 * tri and rect primitives
