@@ -69,7 +69,7 @@ hittable_list demo_scene(int gridsize = 11) {
 hittable_list two_spheres() {
     hittable_list objects;
 
-    auto checker = make_shared<checker_texture>(color(0.0, 0.5, 0.9), color(0.9, 0.9, 0.9));
+    auto checker = make_shared<checker_texture>(color(0.0, 0.0, 0.0), color(1.0, 1.0, 1.0));
 
     objects.add(make_shared<Sphere>(point3(0,-10, 0), 10, make_shared<lambertian>(checker)));
     objects.add(make_shared<Sphere>(point3(0, 10, 0), 10, make_shared<lambertian>(checker)));
