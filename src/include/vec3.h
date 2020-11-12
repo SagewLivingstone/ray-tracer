@@ -6,6 +6,7 @@
 #include <iostream>
 
 using std::sqrt;
+using std::fabs;
 
 class vec3 {
 public:
@@ -49,6 +50,12 @@ public:
     double length() const
     {
         return sqrt(length_squared());
+    }
+
+    bool near_zero() const {
+        // Return true if the vector is very close to zero in all dimensions
+        const auto s = 1e-8;
+        return (fabs(e[0]) < s) && (fabs(e[1]) < s) && (fabs(e[2]) < s);
     }
 
     inline static vec3 random() {
