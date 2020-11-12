@@ -40,35 +40,24 @@ bool moving_sphere::hit(const ray& r, double tmin, double tmax, hit_record& rec)
     auto c = oc.length_squared() - radius * radius;
     auto discriminant = half_b * half_b - a * c;
 
-    if (discriminant > 0) {
-        auto root = sqrt(discriminant);
+    if (discriminant < 0) return false;
+    auto sqrtd = sqrt(discriminant);
 
-        // TODO: Don't always check for normal? Waste of compute if already hit
-
-        // Check the negative root
-        auto tmp = (-half_b - root) / a;
-        if (tmp < tmax && tmp > tmin) {
-            rec.t = tmp;
-            rec.p = r.at(tmp);
-            vec3 outward_normal = (rec.p - center(r.time())) / radius;
-            rec.set_face_normal(r, outward_normal);
-            rec.mat_ptr = mat_ptr;
-            return true;
-        }
-
-        // Check the positive root
-        tmp = (-half_b + root) / a;
-        if (tmp < tmax && tmp > tmin) {
-            rec.t = tmp;
-            rec.p = r.at(tmp);
-            vec3 outward_normal = (rec.p - center(r.time())) / radius;
-            rec.set_face_normal(r, outward_normal);
-            rec.mat_ptr = mat_ptr;
-            return true;
-        }
+    // Find the nearest root that lies within t range
+    auto root = (-half_b - sqrtd) / a;
+    if (root < tmin || tmax < root) {
+        root = (-half_b + sqrtd) / a;
+        if (root < tmin || tmax < root)
+            return false;
     }
 
-    return false;
+    rec.t = root;
+    rec.p = r.at(rec.t);
+    vec3 outward_normal = (rec.p - center(r.time())) / radius;
+    rec.set_face_normal(r, outward_normal);
+    rec.mat_ptr = mat_ptr;
+
+    return true;
 }
 
 bool moving_sphere::bounding_box(double t0, double t1, aabb& output_box) const {

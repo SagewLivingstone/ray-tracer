@@ -146,7 +146,7 @@ int main()
 
     std::cerr << "\nDone scanning.\n";
 
-    std::cout << "Saving output...\n";
+    std::cerr << "Saving output...\n";
 
     stbi_write_png("image.png", image_width, image_height, 3, image_data, sizeof(uint8_t) * image_width * 3);
 
