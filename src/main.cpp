@@ -13,6 +13,10 @@
 
 #include <iostream>
 
+// ----------------------------
+// |         SCENES           |
+// ----------------------------
+
 hittable_list demo_scene(int gridsize = 11) {
     hittable_list world;
 
@@ -62,6 +66,40 @@ hittable_list demo_scene(int gridsize = 11) {
     return world;
 }
 
+hittable_list two_spheres() {
+    hittable_list objects;
+
+    auto checker = make_shared<checker_texture>(color(0.0, 0.5, 0.9), color(0.9, 0.9, 0.9));
+
+    objects.add(make_shared<Sphere>(point3(0,-10, 0), 10, make_shared<lambertian>(checker)));
+    objects.add(make_shared<Sphere>(point3(0, 10, 0), 10, make_shared<lambertian>(checker)));
+
+    return objects;
+}
+
+hittable_list demo_mats() {
+    hittable_list world;
+
+    auto material_ground   = make_shared<lambertian>(color(0.1, 0.8, 0.2));
+    auto material_diff     = make_shared<lambertian>(color(0.5, 0.0, 0.5));
+    auto material_metal    = make_shared<metal>(color(0.8, 0.8, 0.8), 0.2);
+    auto material_bronze   = make_shared<metal>(color(0.8, 0.6, 0.2), 0.5);
+    auto material_glass    = make_shared<dielectric>(1.5);
+    auto texture_checker   = make_shared<checker_texture>(color(0.0, 0.0, 0.0), color(1, 1, 1));
+    auto material_checker  = make_shared<lambertian>(texture_checker);
+
+    world.add(make_shared<Sphere>(point3(0, -1000.5, -1), 1000.0, material_checker));
+    world.add(make_shared<Sphere>(point3(0.0, 0.0, -1.0), 0.5, material_diff));
+    world.add(make_shared<Sphere>(point3(1.0, 0.0, -1.0), 0.5, material_bronze));
+
+    world.add(make_shared<Sphere>(point3(-1.0, 0.0, -1.0), 0.5, material_glass));
+    world.add(make_shared<Sphere>(point3(-1.0, 0.0, -1.0), -0.45, material_glass));
+
+    world.add(make_shared<Sphere>(point3(0.0, 1.0, -1.5), 0.5, material_metal));
+
+    return world;
+}
+
 color ray_color(const ray& r, const hittable& world, int depth)
 {
     if (depth <= 0) {
@@ -85,7 +123,6 @@ color ray_color(const ray& r, const hittable& world, int depth)
 
 int main()
 {
-
     // Image
     const auto aspect_ratio = 3.0 / 2.0;
     const int image_width = 400;
@@ -97,37 +134,42 @@ int main()
     int image_index = 0;
 
     // World
-    //bvh_node world(demo_scene(9), 0, 1.0);
     hittable_list world;
 
-    auto material_ground   = make_shared<lambertian>(color(0.1, 0.8, 0.2));
-    auto material_diff     = make_shared<lambertian>(color(0.9, 0.1, 0.7));
-    auto material_metal    = make_shared<metal>(color(0.8, 0.8, 0.8), 0.2);
-    auto material_bronze   = make_shared<metal>(color(0.8, 0.6, 0.2), 0.5);
-    auto material_glass    = make_shared<dielectric>(1.5);
-    auto texture_checker   = make_shared<checker_texture>(color(0.8, 0.0, 0.8), color(1, 1, 1));
-    auto material_checker  = make_shared<lambertian>(texture_checker);
+    point3 lookfrom, lookat;
+    auto vfov = 40.0;
+    auto aperature = 0.0;
 
-    world.add(make_shared<Sphere>(point3(0, -1000.5, -1), 1000.0, material_checker));
-    world.add(make_shared<Sphere>(point3(0.0, 0.0, -1.0), 0.5, material_diff));
-    world.add(make_shared<Sphere>(point3(1.0, 0.0, -1.0), 0.5, material_bronze));
-
-    world.add(make_shared<Sphere>(point3(-1.0, 0.0, -1.0), 0.5, material_glass));
-    world.add(make_shared<Sphere>(point3(-1.0, 0.0, -1.0), -0.45, material_glass));
-
-    world.add(make_shared<Sphere>(point3(0.0, 1.0, -1.5), 0.5, material_metal));
+    switch (2) {
+    case 0:
+        world = demo_mats();
+        lookfrom = point3(1, 0, 2);
+        lookat = point3(0, 0,-1);
+        break;
+    case 1:
+        world = demo_scene();
+        lookfrom = point3(13, 2, 3);
+        lookat = point3(0, 0, 0);
+        vfov = 20.0;
+        aperature = 0.1;
+        break;
+    case 2:
+        world = two_spheres();
+        lookfrom = point3(13, 2, 3);
+        lookat = point3(0, 0, 0);
+        vfov = 20.0;
+        break;
+    }
 
     bvh_node bvh_world(world, 0, 1.0);
 
     // Camera
-    point3 lookfrom(13, 2, 3);
-    point3 lookat(0, 0, 0);
     vec3 vup(0, 1, 0);
-    double dist_to_focus = 10;
-    camera cam(lookfrom, lookat, vup, 25, aspect_ratio, 0.1, dist_to_focus, 0.0, 1.0);
+    double dist_to_focus = 10.0;
+    camera cam(lookfrom, lookat, vup, vfov, aspect_ratio, aperature, dist_to_focus, 0.0, 1.0);
+
 
     // Render
-
     for (int j = (image_height - 1); j >= 0; --j)
     {
         std::cerr << "\rScanlines remaining: " << j << ' ' << std::flush;
