@@ -74,16 +74,13 @@ public:
 
         double cos_theta = fmin(dot(-unit_direction, rec.normal), 1.0);
         double sin_theta = sqrt(1.0 - cos_theta * cos_theta);
-        if (refraction_ratio * sin_theta > 1.0) {
-            vec3 reflected = reflect(unit_direction, rec.normal);
-            scattered = ray(rec.p, reflected);
-            return true;
-        }
         double reflect_prob = schlick(cos_theta, refraction_ratio);
-        if (random_double() < reflect_prob)
-        {
+
+        bool cannot_refract = refraction_ratio * sin_theta > 1.0;
+
+        if (cannot_refract || random_double() < reflect_prob) {
             vec3 reflected = reflect(unit_direction, rec.normal);
-            scattered = ray(rec.p, reflected);
+            scattered = ray(rec.p, reflected, r_in.time());
             return true;
         }
 
