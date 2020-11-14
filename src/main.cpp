@@ -100,6 +100,16 @@ hittable_list demo_mats() {
     return world;
 }
 
+hittable_list two_perlin_spheres() {
+    hittable_list objects;
+
+    auto pertext = make_shared<noise_texture>();
+    objects.add(make_shared<Sphere>(point3(0, -1000, 0), 1000, make_shared<lambertian>(pertext)));
+    objects.add(make_shared<Sphere>(point3(0, 2, 0), 2, make_shared<lambertian>(pertext)));
+
+    return objects;
+}
+
 color ray_color(const ray& r, const hittable& world, int depth)
 {
     if (depth <= 0) {
@@ -140,7 +150,7 @@ int main()
     auto vfov = 40.0;
     auto aperature = 0.0;
 
-    switch (2) {
+    switch (3) {
     case 0:
         world = demo_mats();
         lookfrom = point3(1, 0, 2);
@@ -158,6 +168,12 @@ int main()
         lookfrom = point3(13, 2, 3);
         lookat = point3(0, 0, 0);
         vfov = 20.0;
+        break;
+    case 3:
+        world = two_perlin_spheres();
+        lookfrom = point3(13, 2, 3);
+        lookat = point3(0, 0, 0);
+        vfov = 25.0;
         break;
     }
 
