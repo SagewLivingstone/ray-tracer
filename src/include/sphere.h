@@ -7,10 +7,10 @@
 
 #include <cmath>
 
-class Sphere : public hittable {
+class sphere : public hittable {
 public:
-    Sphere() {}
-    Sphere(point3 cen, double r, shared_ptr<material> m) : center(cen), radius(r), mat_ptr(m) {}
+    sphere() {}
+    sphere(point3 cen, double r, shared_ptr<material> m) : center(cen), radius(r), mat_ptr(m) {}
 
     virtual bool hit(
         const ray& r, double tmin, double tmax, hit_record& rec) const override;
@@ -32,7 +32,7 @@ public:
     shared_ptr<material> mat_ptr;
 };
 
-bool Sphere::hit(const ray& r, double tmin, double tmax, hit_record& rec) const {
+bool sphere::hit(const ray& r, double tmin, double tmax, hit_record& rec) const {
     vec3 oc = r.origin() - center;
     auto a = r.direction().length_squared();
     auto half_b = dot(oc, r.direction());
@@ -60,7 +60,7 @@ bool Sphere::hit(const ray& r, double tmin, double tmax, hit_record& rec) const 
     return true;
 }
 
-bool Sphere::bounding_box(double t0, double t1, aabb& output_box) const {
+bool sphere::bounding_box(double t0, double t1, aabb& output_box) const {
     output_box = aabb(
         center - vec3(radius, radius, radius),
         center + vec3(radius, radius, radius)

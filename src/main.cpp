@@ -21,7 +21,7 @@ hittable_list demo_scene(int gridsize = 11) {
     hittable_list world;
 
     auto ground_material = make_shared<lambertian>(color(0.5, 0.5, 0.5));
-    world.add(make_shared<Sphere>(point3(0, -1000, 0), 1000, ground_material));
+    world.add(make_shared<sphere>(point3(0, -1000, 0), 1000, ground_material));
 
     for (int a = -gridsize; a < gridsize; a++) {
         for (int b = -gridsize; b < gridsize; b++) {
@@ -55,13 +55,13 @@ hittable_list demo_scene(int gridsize = 11) {
     }
 
     auto material1 = make_shared<dielectric>(1.5);
-    world.add(make_shared<Sphere>(point3(0, 1, 0), 1.0, material1));
+    world.add(make_shared<sphere>(point3(0, 1, 0), 1.0, material1));
 
     auto material2 = make_shared<lambertian>(color(0.4, 0.2, 0.1));
-    world.add(make_shared<Sphere>(point3(-4, 1, 0), 1.0, material2));
+    world.add(make_shared<sphere>(point3(-4, 1, 0), 1.0, material2));
 
     auto material3 = make_shared<metal>(color(0.7, 0.6, 0.5), 0.0);
-    world.add(make_shared<Sphere>(point3(4, 1, 0), 1.0, material3));
+    world.add(make_shared<sphere>(point3(4, 1, 0), 1.0, material3));
 
     return world;
 }
@@ -71,8 +71,8 @@ hittable_list two_spheres() {
 
     auto checker = make_shared<checker_texture>(color(0.0, 0.0, 0.0), color(1.0, 1.0, 1.0));
 
-    objects.add(make_shared<Sphere>(point3(0,-10, 0), 10, make_shared<lambertian>(checker)));
-    objects.add(make_shared<Sphere>(point3(0, 10, 0), 10, make_shared<lambertian>(checker)));
+    objects.add(make_shared<sphere>(point3(0,-10, 0), 10, make_shared<lambertian>(checker)));
+    objects.add(make_shared<sphere>(point3(0, 10, 0), 10, make_shared<lambertian>(checker)));
 
     return objects;
 }
@@ -88,14 +88,14 @@ hittable_list demo_mats() {
     auto texture_checker   = make_shared<checker_texture>(color(0.0, 0.0, 0.0), color(1, 1, 1));
     auto material_checker  = make_shared<lambertian>(texture_checker);
 
-    world.add(make_shared<Sphere>(point3(0, -1000.5, -1), 1000.0, material_checker));
-    world.add(make_shared<Sphere>(point3(0.0, 0.0, -1.0), 0.5, material_diff));
-    world.add(make_shared<Sphere>(point3(1.0, 0.0, -1.0), 0.5, material_bronze));
+    world.add(make_shared<sphere>(point3(0, -1000.5, -1), 1000.0, material_checker));
+    world.add(make_shared<sphere>(point3(0.0, 0.0, -1.0), 0.5, material_diff));
+    world.add(make_shared<sphere>(point3(1.0, 0.0, -1.0), 0.5, material_bronze));
 
-    world.add(make_shared<Sphere>(point3(-1.0, 0.0, -1.0), 0.5, material_glass));
-    world.add(make_shared<Sphere>(point3(-1.0, 0.0, -1.0), -0.45, material_glass));
+    world.add(make_shared<sphere>(point3(-1.0, 0.0, -1.0), 0.5, material_glass));
+    world.add(make_shared<sphere>(point3(-1.0, 0.0, -1.0), -0.45, material_glass));
 
-    world.add(make_shared<Sphere>(point3(0.0, 1.0, -1.5), 0.5, material_metal));
+    world.add(make_shared<sphere>(point3(0.0, 1.0, -1.5), 0.5, material_metal));
 
     return world;
 }
@@ -104,8 +104,8 @@ hittable_list two_perlin_spheres() {
     hittable_list objects;
 
     auto pertext = make_shared<noise_texture>();
-    objects.add(make_shared<Sphere>(point3(0, -1000, 0), 1000, make_shared<lambertian>(pertext)));
-    objects.add(make_shared<Sphere>(point3(0, 2, 0), 2, make_shared<lambertian>(pertext)));
+    objects.add(make_shared<sphere>(point3(0, -1000, 0), 1000, make_shared<lambertian>(pertext)));
+    objects.add(make_shared<sphere>(point3(0, 2, 0), 2, make_shared<lambertian>(pertext)));
 
     return objects;
 }
