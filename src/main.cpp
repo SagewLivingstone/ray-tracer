@@ -112,12 +112,16 @@ hittable_list two_perlin_spheres() {
 }
 
 hittable_list earth() {
-    auto earth_texture = make_shared<image_texture>("image/earthmap.jpg");
+    auto earth_texture = make_shared<image_texture>("texture/earthmap.jpg");
     auto earth_surface = make_shared<lambertian>(earth_texture);
     auto globe = make_shared<sphere>(point3(0, 0, 0), 2, earth_surface);
 
     return hittable_list(globe);
 }
+
+// --------------------------
+//      /END OF SCENES
+// --------------------------
 
 color ray_color(const ray& r, const hittable& world, int depth)
 {
@@ -159,7 +163,7 @@ int main()
     auto vfov = 40.0;
     auto aperature = 0.0;
 
-    switch (3) {
+    switch (4) {
     case 0:
         world = demo_mats();
         lookfrom = point3(1, 0, 2);
