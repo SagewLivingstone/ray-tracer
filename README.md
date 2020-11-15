@@ -17,6 +17,7 @@ _Demo sphere scene showing high-reflective and dielectric glass spheres, depth o
 
 ## current todos:
 * multithread aa rays
+* perlin noise implementation
 * ~add library to output to png~
 * ~textures and uv mapping~
   * bitmap image textures
