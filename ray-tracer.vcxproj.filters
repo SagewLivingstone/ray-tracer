@@ -71,5 +71,8 @@
     <ClInclude Include="src\include\perlin.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\include\stb_image_implementation.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

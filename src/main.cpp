@@ -111,6 +111,14 @@ hittable_list two_perlin_spheres() {
     return objects;
 }
 
+hittable_list earth() {
+    auto earth_texture = make_shared<image_texture>("image/earthmap.jpg");
+    auto earth_surface = make_shared<lambertian>(earth_texture);
+    auto globe = make_shared<sphere>(point3(0, 0, 0), 2, earth_surface);
+
+    return hittable_list(globe);
+}
+
 color ray_color(const ray& r, const hittable& world, int depth)
 {
     if (depth <= 0) {
@@ -176,6 +184,14 @@ int main()
         lookat = point3(0, 0, 0);
         vfov = 25.0;
         break;
+    case 4:
+        world = earth();
+        lookfrom = point3(13, 2, 3);
+        lookat = point3(0, 0, 0);
+        vfov = 25.0;
+        break;
+    default:
+        exit(1);
     }
 
     bvh_node bvh_world(world, 0, 1.0);
