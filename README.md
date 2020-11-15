@@ -15,13 +15,17 @@ _low res test of textures and dielectrics_
 
 _Demo sphere scene showing high-reflective and dielectric glass spheres, depth of field from high aperature simulation._
 
+![](https://github.com/SagewLivingstone/ray-tracer/blob/main/perlin_and_marble.png?raw=true)
+
+_Perlin noise turbulant texture and marble texture using perlin noise on phase of a sin wave_
+
 ## current todos:
 * multithread aa rays
 * ~perlin noise implementation~
 * ~add library to output to png~
 * ~textures and uv mapping~
   * bitmap image textures
-  * coordinate uv's
+  * ~coordinate uv's~
 * emissive lighting
 * diffuse volumes
 * tri and rect primitives
