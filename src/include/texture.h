@@ -63,5 +63,18 @@ public:
     double scale, turb_depth;
 };
 
+class marble_texture : public noise_texture {
+public:
+    marble_texture() {}
+    marble_texture(double sc, double td, double phase) : noise_texture(sc, td), phase(phase) {}
+
+    virtual color value(double u, double v, const point3& p) const override {
+        return 0.5 * (1 + sin(scale * p.z() + phase * noise.turb(p))) * color(1, 1, 1);
+    }
+
+public:
+    double phase;
+};
+
 #endif // !TEXTURE_H
 
