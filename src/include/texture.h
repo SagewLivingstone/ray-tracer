@@ -52,13 +52,15 @@ public:
 class noise_texture : public texture {
 public:
     noise_texture() {};
+    noise_texture(double sc, double turb_depth = 1) : scale(sc), turb_depth(turb_depth) {}
 
     virtual color value(double u, double v, const point3& p) const override {
-        return noise.noise(p) * color(1, 1, 1);
+        return noise.turb(scale * p, turb_depth) * color(1, 1, 1);
     }
 
 public:
     perlin noise;
+    double scale, turb_depth;
 };
 
 #endif // !TEXTURE_H
