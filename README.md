@@ -9,7 +9,7 @@ _Test of simple diffuse (lambertian) and metallic-reflective materials_
 
 ![checker texture and mats](https://github.com/SagewLivingstone/ray-tracer/blob/main/materials_render.png)
 
-_low res test of textures and dielectrics_
+_Various materials and dielectrics_
 
 ![demo sphere scene](https://github.com/SagewLivingstone/ray-tracer/blob/main/demo_scene_spheres.png?raw=true)
 
