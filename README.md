@@ -7,9 +7,9 @@ Simple brute-force ray tracer written in C++, no external libs (except for png/j
 
 _Test of simple diffuse (lambertian) and metallic-reflective materials_
 
-![checker texture and mats](https://github.com/SagewLivingstone/ray-tracer/blob/main/materials_render_low.png)
+![checker texture and mats](https://github.com/SagewLivingstone/ray-tracer/blob/main/materials_render.png)
 
-_low res test of textures and dielectrics_
+_Various materials and dielectrics_
 
 ![demo sphere scene](https://github.com/SagewLivingstone/ray-tracer/blob/main/demo_scene_spheres.png?raw=true)
 
@@ -17,7 +17,7 @@ _Demo sphere scene showing high-reflective and dielectric glass spheres, depth o
 
 ![](https://github.com/SagewLivingstone/ray-tracer/blob/main/perlin_and_marble.png?raw=true)
 
-_Perlin noise turbulant texture and marble texture using perlin noise on phase of a sin wave_
+_Perlin noise turbulant texture and a marble texture using perlin noise on the phase of a sin wave_
 
 ## current todos:
 * multithread aa rays
@@ -26,6 +26,7 @@ _Perlin noise turbulant texture and marble texture using perlin noise on phase o
 * ~textures and uv mapping~
   * bitmap image textures
   * ~coordinate uv's~
+* possible issue with gamma correction, crushing low rgb values read from bitmap textures?
 * emissive lighting
 * diffuse volumes
 * tri and rect primitives
