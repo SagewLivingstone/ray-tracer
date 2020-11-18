@@ -148,7 +148,7 @@ int main()
 {
     // Image
     const auto aspect_ratio = 3.0 / 2.0;
-    const int image_width = 1600;
+    const int image_width = 400;
     const int image_height = static_cast<int>(image_width / aspect_ratio);
     const int samples_per_pixel = 100;
     const int max_depth = 50;  // Maximum reflection depth
@@ -163,7 +163,7 @@ int main()
     auto vfov = 40.0;
     auto aperature = 0.0;
 
-    switch (3) {
+    switch (4) {
     case 0:
         world = demo_mats();
         lookfrom = point3(1, 0, 2);
