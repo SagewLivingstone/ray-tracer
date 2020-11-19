@@ -27,6 +27,7 @@ _Perlin noise turbulant texture and a marble texture using perlin noise on the p
   * ~bitmap image textures~
   * ~coordinate uv's~
 * ~possible issue with gamma correction, crushing low rgb values read from bitmap textures?~
-* emissive lighting
+* ~emissive lighting~
 * diffuse volumes
-* tri and rect primitives
+* tri primitive
+* ~rect primitives~
