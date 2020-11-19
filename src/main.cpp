@@ -123,24 +123,29 @@ hittable_list earth() {
 //      /END OF SCENES
 // --------------------------
 
-color ray_color(const ray& r, const hittable& world, int depth)
+color ray_color(const ray& r, const color& background, const hittable& world, int depth)
 {
+    hit_record rec;
+
     if (depth <= 0)
         return color(0, 0, 0);
 
-    hit_record rec;
-    if (world.hit(r, 0.001, infinity, rec)) {
-        ray scattered;
-        color attenuation;
-        if (rec.mat_ptr->scatter(r, rec, attenuation, scattered)) {
-            return attenuation * ray_color(scattered, world, depth - 1);
-        }
-        return color(0, 0, 0);
-    }
+    if (!world.hit(r, 0.001, infinity, rec))
+        return background;
 
-    vec3 unit_direction = unit_vector(r.direction());
-    auto t = 0.5 * (unit_direction.y() + 1.0);  // Interp traverse on the y axis
-    return interp3(white, sky_blue, t);
+    ray scattered;
+    color attenuation;
+    color emitted = rec.mat_ptr->emitted(rec.u, rec.v, rec.p);
+
+    if (!rec.mat_ptr->scatter(r, rec, attenuation, scattered))
+        return emitted;
+
+    return emitted + attenuation * ray_color(scattered, background, world, depth - 1);
+
+    /* Old Sky Color Code */
+    //vec3 unit_direction = unit_vector(r.direction());
+    //auto t = 0.5 * (unit_direction.y() + 1.0);  // Interp traverse on the y axis
+    //return interp3(white, sky_blue, t);
 }
 
 int main()
@@ -151,6 +156,8 @@ int main()
     const int image_height = static_cast<int>(image_width / aspect_ratio);
     const int samples_per_pixel = 100;
     const int max_depth = 50;  // Maximum reflection depth
+
+    color background(0, 0, 0);
 
     uint8_t* image_data = new uint8_t[image_width * image_height * 3];
     int image_index = 0;
@@ -165,11 +172,13 @@ int main()
     switch (0) {
     case 0:
         world = demo_mats();
+        background = color(0.7, 0.8, 1.0);
         lookfrom = point3(1, 0, 2);
         lookat = point3(0, 0,-1);
         break;
     case 1:
         world = demo_scene();
+        background = color(0.7, 0.8, 1.0);
         lookfrom = point3(13, 2, 3);
         lookat = point3(0, 0, 0);
         vfov = 20.0;
@@ -177,21 +186,27 @@ int main()
         break;
     case 2:
         world = two_spheres();
+        background = color(0.7, 0.8, 1.0);
         lookfrom = point3(13, 2, 3);
         lookat = point3(0, 0, 0);
         vfov = 20.0;
         break;
     case 3:
         world = two_perlin_spheres();
+        background = color(0.7, 0.8, 1.0);
         lookfrom = point3(13, 2, 3);
         lookat = point3(0, 0, 0);
         vfov = 25.0;
         break;
     case 4:
         world = earth();
+        background = color(0.7, 0.8, 1.0);
         lookfrom = point3(13, 2, 3);
         lookat = point3(0, 0, 0);
         vfov = 25.0;
+        break;
+    case 5:
+        background = color(0, 0, 0);
         break;
     default:
         exit(1);
@@ -216,7 +231,7 @@ int main()
                 auto u = (i + random_double()) / (image_width - 1);
                 auto v = (j + random_double()) / (image_height - 1);
                 ray r = cam.get_ray(u, v);
-                pixel_color += ray_color(r, world, max_depth);
+                pixel_color += ray_color(r, background, world, max_depth);
             }
             write_data_color(image_data, &image_index, pixel_color, samples_per_pixel);
         }
