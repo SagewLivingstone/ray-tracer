@@ -125,9 +125,8 @@ hittable_list earth() {
 
 color ray_color(const ray& r, const hittable& world, int depth)
 {
-    if (depth <= 0) {
+    if (depth <= 0)
         return color(0, 0, 0);
-    }
 
     hit_record rec;
     if (world.hit(r, 0.001, infinity, rec)) {
@@ -163,7 +162,7 @@ int main()
     auto vfov = 40.0;
     auto aperature = 0.0;
 
-    switch (4) {
+    switch (0) {
     case 0:
         world = demo_mats();
         lookfrom = point3(1, 0, 2);
