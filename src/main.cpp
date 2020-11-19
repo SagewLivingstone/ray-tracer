@@ -135,7 +135,8 @@ hittable_list light_demo() {
     objects.add(make_shared<sphere>(point3(0, 7, 0), 1.7, difflight_bright));
 
     auto material_glass    = make_shared<dielectric>(1.5);
-    objects.add(make_shared<sphere>(point3(3, 2, 2), 2, material_glass));
+    objects.add(make_shared<sphere>(point3(3, 2, 2), 2.0, material_glass));
+    objects.add(make_shared<sphere>(point3(3, 2, 2),-1.9, material_glass));
 
     return objects;
 }
@@ -197,9 +198,6 @@ int main()
 
     color background(0, 0, 0);
 
-    uint8_t* image_data = new uint8_t[image_width * image_height * 3];
-    int image_index = 0;
-
     // World
     hittable_list world;
 
@@ -207,7 +205,7 @@ int main()
     auto vfov = 40.0;
     auto aperature = 0.0;
 
-    switch (5) {
+    switch (6) {
     case 0:
         world = demo_mats();
         background = color(0.7, 0.8, 1.0);
@@ -273,6 +271,8 @@ int main()
     int image_height = static_cast<int>(image_width / aspect_ratio);
     camera cam(lookfrom, lookat, vup, vfov, aspect_ratio, aperature, dist_to_focus, 0.0, 1.0);
 
+    uint8_t* image_data = new uint8_t[image_width * image_height * 3];
+    int image_index = 0;
 
     // Render
     for (int j = (image_height - 1); j >= 0; --j)
