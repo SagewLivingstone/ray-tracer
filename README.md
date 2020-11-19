@@ -24,9 +24,9 @@ _Perlin noise turbulant texture and a marble texture using perlin noise on the p
 * ~perlin noise implementation~
 * ~add library to output to png~
 * ~textures and uv mapping~
-  * bitmap image textures
+  * ~bitmap image textures~
   * ~coordinate uv's~
-* possible issue with gamma correction, crushing low rgb values read from bitmap textures?
+* ~possible issue with gamma correction, crushing low rgb values read from bitmap textures?~
 * emissive lighting
 * diffuse volumes
 * tri and rect primitives
