@@ -7,6 +7,7 @@
 #include "include/camera.h"
 #include "include/material.h"
 #include "include/bvh.h"
+#include "include/aarect.h"
 
 #define STB_IMAGE_WRITE_IMPLEMENTATION
 #include "lib/stb_image_write.h"
@@ -119,6 +120,26 @@ hittable_list earth() {
     return hittable_list(globe);
 }
 
+hittable_list light_demo() {
+    hittable_list objects;
+
+    auto pertext = make_shared<noise_texture>(4, 3);
+    auto marbtext = make_shared<marble_texture>(10, 3, 10);
+    objects.add(make_shared<sphere>(point3(0, -1000, 0), 1000, make_shared<lambertian>(pertext)));
+    objects.add(make_shared<sphere>(point3(0, 2, 0), 2, make_shared<lambertian>(marbtext)));
+
+    auto difflight = make_shared<diffuse_light>(4 * color(1, 1, 1));
+    objects.add(make_shared<xy_rect>(3, 5, 1, 3, -2, difflight));
+
+    auto difflight_bright = make_shared<diffuse_light>(10 * color(1, 1, 1));
+    objects.add(make_shared<sphere>(point3(0, 7, 0), 1.7, difflight_bright));
+
+    auto material_glass    = make_shared<dielectric>(1.5);
+    objects.add(make_shared<sphere>(point3(3, 2, 2), 2, material_glass));
+
+    return objects;
+}
+
 // --------------------------
 //      /END OF SCENES
 // --------------------------
@@ -154,7 +175,7 @@ int main()
     const auto aspect_ratio = 3.0 / 2.0;
     const int image_width = 400;
     const int image_height = static_cast<int>(image_width / aspect_ratio);
-    const int samples_per_pixel = 100;
+    int samples_per_pixel = 100;
     const int max_depth = 50;  // Maximum reflection depth
 
     color background(0, 0, 0);
@@ -169,7 +190,7 @@ int main()
     auto vfov = 40.0;
     auto aperature = 0.0;
 
-    switch (0) {
+    switch (5) {
     case 0:
         world = demo_mats();
         background = color(0.7, 0.8, 1.0);
@@ -206,7 +227,12 @@ int main()
         vfov = 25.0;
         break;
     case 5:
+        world = light_demo();
+        samples_per_pixel = 400;
         background = color(0, 0, 0);
+        lookfrom = point3(26, 3, 6);
+        lookat = point3(0, 2, 0);
+        vfov = 25.0;
         break;
     default:
         exit(1);
